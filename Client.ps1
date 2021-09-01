@@ -32,10 +32,10 @@ param (
     [string]
     $PostLogoutRedirectUri,
     [Parameter(Mandatory=$false)]
-    [bool]
+    [string]
     $RequirePkce=$true,
     [Parameter(Mandatory=$false)]
-    [bool]
+    [string]
     $AllowOfflineAccess=$false,
     [Parameter(Mandatory=$false)]
     [string]
