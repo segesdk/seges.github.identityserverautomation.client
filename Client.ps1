@@ -48,8 +48,9 @@ param (
 #requires -PSEdition Core
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-. $pwd\_IdentityServerCommon.ps1
+. $here\_IdentityServerCommon.ps1
 
 Confirm-AbsoluteUrl ($IdentityServerUrl)
 Confirm-LowerCase ($ClientId)
