@@ -33,10 +33,10 @@ param (
     $PostLogoutRedirectUri,
     [Parameter(Mandatory=$false)]
     [string]
-    $RequirePkce=$true,
+    $RequirePkce=1,
     [Parameter(Mandatory=$false)]
     [string]
-    $AllowOfflineAccess=$false,
+    $AllowOfflineAccess=1,
     [Parameter(Mandatory=$false)]
     [string]
     $AllowedCorsOrigins,
