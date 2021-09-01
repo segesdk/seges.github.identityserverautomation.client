@@ -1,0 +1,55 @@
+# https://confluence.seges.dk/pages/viewpage.action?pageId=166958870
+name: 'IdentityServer Client Resource Registration'
+description: 'Register Client resource in Identity Server'
+inputs:
+  IdentityServerClientId:  # id of input
+    description: 'Client id for logging into Identity Server'
+    required: true
+  IdentityServerClientSecret:  # id of input
+    description: 'Client secret for logging into Identity Server'
+    required: true
+  IdentityServerUrl:  # id of input
+    description: 'URL for the Identity Server'
+    required: true
+  ResourceEnvironment:  # id of input
+    description: 'Navnet på det miljø der registreres for'
+    required: true
+  ClientId:  # id of input
+    description: 'ClientId er unik nøgle for Client - kan derfor ikke ændres; det vil blive opfattet som registrering af en ny Client. Skal være URI - anvend URL for ressourcer der hostes på en sådan (fx webapps), URN for ressourcer uden en naturlig URL (fx native mobil-apps, Windowsapplikationer).'
+    required: true
+  ClientName:  # id of input
+    description: 'Navnet på klienten. Bruges ikke til noget pt.'
+    required: true
+  AllowedScopes:  # id of input
+    description: 'Ved flere scopes benyttes space som separator. Skal lowercases.'
+    required: true
+  AllowedGrantTypes:  # id of input
+    description: 'Ved flere granttypes benyttes separator ",". Pt. understøttes: authorization_code, client_credentials og urn:ietf:params:oauth:grant-type:token-exchange'
+    required: true
+  RedirectUris:  # id of input
+    description: 'Ved flere Redirects benyttes separator ",". Skal lowercases. Skal være URI'
+    required: true
+  PostLogoutRedirectUri:  # id of input
+    description: 'Skal lowercases. Skal være URI'
+    required: true
+  RequirePkce:  # id of input
+    description: 'PKCE - slå det kun fra hvis du ved hvad du gør, og aldrig for en Public Client der anvender refresh tokens'
+    required: false
+  AllowOfflineAccess:  # id of input
+    description: 'Udsted refresh tokens'
+    required: false
+  AllowedCorsOrigins:  # id of input
+    description: 'Ved flere CorsOrigins benyttes separator ",". AllowedCorsOrigines er ikke påkrævet. Skal lowercases. Skal være URI'
+    required: false
+  RoleFilter:  # id of input
+    description: 'Kommasepareret liste over grupper eller gruppe-wildcards. Bruges til at filtrere role claimet i det udstedte id_token. Kun obligatorisk hvis man har role i AllowedScope.'
+    required: false
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/client.ps1 -IdentityServerClientId ${{ inputs.IdentityServerClientId }} -IdentityServerClientSecret '${{ inputs.IdentityServerClientSecret }}' -IdentityServerUrl '${{ inputs.IdentityServerUrl  }}' -ResourceEnvironment '${{ inputs.ResourceEnvironment }}' -ClientId '${{ inputs.ClientId }}' -ClientName '${{ inputs.ClientName }}' -AllowedScopes '${{ inputs.AllowedScopes }}' -AllowedGrantTypes '${{ inputs.AllowedGrantTypes }}' -RedirectUris '${{ inputs.RedirectUris }}' -PostLogoutRedirectUri '${{ inputs.PostLogoutRedirectUri }}' -RequirePkce '${{ inputs.RequirePkce }}' -AllowOfflineAccess '${{ inputs.AllowOfflineAccess }} -AllowedCorsOrigins '${{ inputs.AllowedCorsOrigins }} -RoleFilter '${{ inputs.RoleFilter }}' 
+      shell: pwsh
