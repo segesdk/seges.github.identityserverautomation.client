@@ -35,9 +35,11 @@ inputs:
   RequirePkce:  # id of input
     description: 'PKCE - slå det kun fra hvis du ved hvad du gør, og aldrig for en Public Client der anvender refresh tokens'
     required: false
+    default: "1"
   AllowOfflineAccess:  # id of input
     description: 'Udsted refresh tokens'
     required: false
+    default: "0"
   AllowedCorsOrigins:  # id of input
     description: 'Ved flere CorsOrigins benyttes separator ",". AllowedCorsOrigines er ikke påkrævet. Skal lowercases. Skal være URI'
     required: false
