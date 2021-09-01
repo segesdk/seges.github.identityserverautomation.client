@@ -77,6 +77,6 @@ runs:
         }
         
         $requirePkceParsed = ConvertTo-Boolean '${{ inputs.RequirePkce }}'
-        $allowOfflineAccessParsed = ConvertTo-Boolean '${{ inputs.AllowOfflineAccess }}
+        $allowOfflineAccessParsed = ConvertTo-Boolean '${{ inputs.AllowOfflineAccess }}'
         ${{ github.action_path }}/client.ps1 -IdentityServerClientId ${{ inputs.IdentityServerClientId }} -IdentityServerClientSecret '${{ inputs.IdentityServerClientSecret }}' -IdentityServerUrl '${{ inputs.IdentityServerUrl  }}' -ResourceEnvironment '${{ inputs.ResourceEnvironment }}' -ClientId '${{ inputs.ClientId }}' -ClientName '${{ inputs.ClientName }}' -AllowedScopes '${{ inputs.AllowedScopes }}' -AllowedGrantTypes '${{ inputs.AllowedGrantTypes }}' -RedirectUris '${{ inputs.RedirectUris }}' -PostLogoutRedirectUri '${{ inputs.PostLogoutRedirectUri }}' -RequirePkce $requirePkceParsed -AllowOfflineAccess $allowOfflineAccessParsed -AllowedCorsOrigins '${{ inputs.AllowedCorsOrigins }} -RoleFilter '${{ inputs.RoleFilter }}' 
       shell: pwsh
