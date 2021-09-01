@@ -53,5 +53,30 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/client.ps1 -IdentityServerClientId ${{ inputs.IdentityServerClientId }} -IdentityServerClientSecret '${{ inputs.IdentityServerClientSecret }}' -IdentityServerUrl '${{ inputs.IdentityServerUrl  }}' -ResourceEnvironment '${{ inputs.ResourceEnvironment }}' -ClientId '${{ inputs.ClientId }}' -ClientName '${{ inputs.ClientName }}' -AllowedScopes '${{ inputs.AllowedScopes }}' -AllowedGrantTypes '${{ inputs.AllowedGrantTypes }}' -RedirectUris '${{ inputs.RedirectUris }}' -PostLogoutRedirectUri '${{ inputs.PostLogoutRedirectUri }}' -RequirePkce '${{ inputs.RequirePkce }}' -AllowOfflineAccess '${{ inputs.AllowOfflineAccess }} -AllowedCorsOrigins '${{ inputs.AllowedCorsOrigins }} -RoleFilter '${{ inputs.RoleFilter }}' 
+    - run: |
+        function ConvertTo-Boolean
+        {
+          param
+          (
+            [Parameter(Mandatory=$false)][string] $value
+          )
+          switch ($value)
+          {
+            "y" { return $true; }
+            "yes" { return $true; }
+            "true" { return $true; }
+            "t" { return $true; }
+            1 { return $true; }
+            "n" { return $false; }
+            "no" { return $false; }
+            "false" { return $false; }
+            "f" { return $false; }
+            0 { return $false; }
+            default { return $false; }
+          }
+        }
+        
+        $requirePkceParsed = ConvertTo-Boolean '${{ inputs.RequirePkce }}'
+        $allowOfflineAccessParsed = ConvertTo-Boolean '${{ inputs.AllowOfflineAccess }}
+        ${{ github.action_path }}/client.ps1 -IdentityServerClientId ${{ inputs.IdentityServerClientId }} -IdentityServerClientSecret '${{ inputs.IdentityServerClientSecret }}' -IdentityServerUrl '${{ inputs.IdentityServerUrl  }}' -ResourceEnvironment '${{ inputs.ResourceEnvironment }}' -ClientId '${{ inputs.ClientId }}' -ClientName '${{ inputs.ClientName }}' -AllowedScopes '${{ inputs.AllowedScopes }}' -AllowedGrantTypes '${{ inputs.AllowedGrantTypes }}' -RedirectUris '${{ inputs.RedirectUris }}' -PostLogoutRedirectUri '${{ inputs.PostLogoutRedirectUri }}' -RequirePkce $requirePkceParsed -AllowOfflineAccess $allowOfflineAccessParsed -AllowedCorsOrigins '${{ inputs.AllowedCorsOrigins }} -RoleFilter '${{ inputs.RoleFilter }}' 
       shell: pwsh
