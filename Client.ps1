@@ -30,7 +30,7 @@ param (
     $RedirectUris,
     [Parameter(Mandatory=$true)]
     [string]
-    $PostLogoutRedirectUri,
+    $PostLogoutRedirectUris,
     [Parameter(Mandatory=$false)]
     [string]
     $RequirePkce=1,
@@ -60,12 +60,6 @@ if ($RedirectUris)
     Confirm-LowerCase $RedirectUris
 }
 
-if ($PostLogoutRedirectUri)
-{
-  Confirm-LowerCase $PostLogoutRedirectUri
-  Confirm-AbsoluteUrl $PostLogoutRedirectUri
-}
-
 $name = "$($ResourceEnvironment.ToUpper()) $ClientId";
 
 Write-Host "Running Client.ps1:"
@@ -82,6 +76,18 @@ if ($AllowedScopes)
     $allowedScopesArray = SplitToArray $AllowedScopes ' '
 
     $client | add-member -Name "AllowedScopes" -value $allowedScopesArray -MemberType NoteProperty
+}
+
+if ($PostLogoutRedirectUris)
+{
+
+    $postLogoutRedirectUrisArray = SplitToArray $PostLogoutRedirectUris ','
+    for ($index = 0; $index -lt $postLogoutRedirectUrisArray.count; $index++)
+    {
+        Confirm-LowerCase $postLogoutRedirectUrisArray[$index] $("PostLogoutRedirectUris Index $index")
+        Confirm-AbsoluteUrl $postLogoutRedirectUrisArray[$index] $("PostLogoutRedirectUris Index $index")
+    }
+    $client | add-member -Name "PostLogoutRedirectUris" -value $postLogoutRedirectUrisArray -MemberType NoteProperty
 }
 
 if ($AllowedGrantTypes)

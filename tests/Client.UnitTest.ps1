@@ -18,7 +18,7 @@ Describe "Client" {
         $AllowedScopes = "openid profile role offline_access dev.cattle_cattlewebapi.api"
         $AllowedGrantTypes = "authorization_code,password"
         $RedirectUris = "https://$projectUrl/"
-        $PostLogoutRedirectUri = "https://$projectUrl/#/logged-out"
+        $PostLogoutRedirectUris = "https://$projectUrl/#/logged-out"
     
         # Optional parameters
         # $RequirePkce
@@ -28,7 +28,7 @@ Describe "Client" {
         
         # Act
         {
-            & .\Client.ps1 -IdentityServerClientId $IdentityServerClientId -IdentityServerClientSecret $IdentityServerClientSecret -IdentityServerUrl $IdentityServerUrl -ResourceEnvironment $ResourceEnvironment -ClientId $ClientId -ClientName $ClientName -AllowedScopes $AllowedScopes -AllowedGrantTypes $AllowedGrantTypes -RedirectUris $RedirectUris -PostLogoutRedirectUri $PostLogoutRedirectUri -AllowedCorsOrigins $AllowedCorsOrigins -RoleFilter $RoleFilter  
+            & .\Client.ps1 -IdentityServerClientId $IdentityServerClientId -IdentityServerClientSecret $IdentityServerClientSecret -IdentityServerUrl $IdentityServerUrl -ResourceEnvironment $ResourceEnvironment -ClientId $ClientId -ClientName $ClientName -AllowedScopes $AllowedScopes -AllowedGrantTypes $AllowedGrantTypes -RedirectUris $RedirectUris -PostLogoutRedirectUris $PostLogoutRedirectUris -AllowedCorsOrigins $AllowedCorsOrigins -RoleFilter $RoleFilter  
         } | 
         
         # Asssert

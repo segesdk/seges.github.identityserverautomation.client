@@ -29,8 +29,8 @@ inputs:
   RedirectUris:  # id of input
     description: 'Ved flere Redirects benyttes separator ",". Skal lowercases. Skal være URI'
     required: true
-  PostLogoutRedirectUri:  # id of input
-    description: 'Skal lowercases. Skal være URI'
+  PostLogoutRedirectUris:  # id of input
+    description: 'Ved flere Post Logout Redirect uris benyttes separator ",". Skal lowercases. Skal være URI.'
     required: true
   RequirePkce:  # id of input
     description: 'PKCE - slå det kun fra hvis du ved hvad du gør, og aldrig for en Public Client der anvender refresh tokens'
@@ -78,5 +78,5 @@ runs:
         
         $requirePkceParsed = ConvertTo-Boolean '${{ inputs.RequirePkce }}'
         $allowOfflineAccessParsed = ConvertTo-Boolean '${{ inputs.AllowOfflineAccess }}'
-        ${{ github.action_path }}/client.ps1 -IdentityServerClientId ${{ inputs.IdentityServerClientId }} -IdentityServerClientSecret '${{ inputs.IdentityServerClientSecret }}' -IdentityServerUrl '${{ inputs.IdentityServerUrl  }}' -ResourceEnvironment '${{ inputs.ResourceEnvironment }}' -ClientId '${{ inputs.ClientId }}' -ClientName '${{ inputs.ClientName }}' -AllowedScopes '${{ inputs.AllowedScopes }}' -AllowedGrantTypes '${{ inputs.AllowedGrantTypes }}' -RedirectUris '${{ inputs.RedirectUris }}' -PostLogoutRedirectUri '${{ inputs.PostLogoutRedirectUri }}' -RequirePkce $requirePkceParsed -AllowOfflineAccess $allowOfflineAccessParsed -AllowedCorsOrigins '${{ inputs.AllowedCorsOrigins }}' -RoleFilter '${{ inputs.RoleFilter }}' 
+        ${{ github.action_path }}/client.ps1 -IdentityServerClientId ${{ inputs.IdentityServerClientId }} -IdentityServerClientSecret '${{ inputs.IdentityServerClientSecret }}' -IdentityServerUrl '${{ inputs.IdentityServerUrl  }}' -ResourceEnvironment '${{ inputs.ResourceEnvironment }}' -ClientId '${{ inputs.ClientId }}' -ClientName '${{ inputs.ClientName }}' -AllowedScopes '${{ inputs.AllowedScopes }}' -AllowedGrantTypes '${{ inputs.AllowedGrantTypes }}' -RedirectUris '${{ inputs.RedirectUris }}' -PostLogoutRedirectUris '${{ inputs.PostLogoutRedirectUris }}' -RequirePkce $requirePkceParsed -AllowOfflineAccess $allowOfflineAccessParsed -AllowedCorsOrigins '${{ inputs.AllowedCorsOrigins }}' -RoleFilter '${{ inputs.RoleFilter }}' 
       shell: pwsh
