@@ -33,10 +33,10 @@ param (
     $PostLogoutRedirectUris,
     [Parameter(Mandatory=$false)]
     [string]
-    $RequirePkce=1,
+    $RequirePkce=$true,
     [Parameter(Mandatory=$false)]
     [string]
-    $AllowOfflineAccess=1,
+    $AllowOfflineAccess=$true,
     [Parameter(Mandatory=$false)]
     [string]
     $AllowedCorsOrigins,
@@ -69,7 +69,7 @@ $accesToken = GetAccesToken $identityServerUrl $IdentityServerClientId $Identity
 
 $oldClient = ClientExits $identityServerUrl $ClientId $accesToken
 
-$client = @{ClientId = $clientId; ClientName = $ClientName; PostLogoutRedirectUri = $PostLogoutRedirectUri; RequirePkce = [System.Convert]::ToBoolean($RequirePkce);  AllowOfflineAccess = [System.Convert]::ToBoolean($AllowOfflineAccess); RoleFilter = $RoleFilter }
+$client = @{ClientId = $clientId; ClientName = $ClientName; RequirePkce = [System.Convert]::ToBoolean($RequirePkce);  AllowOfflineAccess = [System.Convert]::ToBoolean($AllowOfflineAccess); RoleFilter = $RoleFilter }
 
 if ($AllowedScopes)
 {
@@ -89,6 +89,10 @@ if ($PostLogoutRedirectUris)
     }
     $client | add-member -Name "PostLogoutRedirectUris" -value $postLogoutRedirectUrisArray -MemberType NoteProperty
 }
+else {
+    $client | add-member -Name "PostLogoutRedirectUris" -value @() -MemberType NoteProperty
+}
+
 
 if ($AllowedGrantTypes)
 { 
@@ -124,11 +128,9 @@ if ($AllowedCorsOrigins)
 else {
     $client | add-member -Name "AllowedCorsOrigins" -value @() -MemberType NoteProperty
 }
-
 $requestJson = $client | ConvertTo-Json -Compress
 
 Write-Host $requestJson
-
 if ($oldClient)
 {
     Write-Host "Updating Client:"

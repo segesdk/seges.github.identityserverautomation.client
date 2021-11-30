@@ -5,12 +5,18 @@ $projectRole = "frontend"
 $environment = "dev"
 $projectUrl= "someurl.somesites.net"
 
+$global:PSDefaultParameterValues = @{
+    'Invoke-RestMethod:Proxy'='http://127.0.0.1:8888'
+    'Invoke-WebRequest:Proxy'='http://127.0.0.1:8888'
+    '*:ProxyUseDefaultCredentials'=$true
+}
+
 Describe "Client" {
     It "writes configuration without errors" {
         # Arrange
         # Mandatory parameters
         $IdentityServerClientId = "urn:si-octopus-client"
-        $IdentityServerClientSecret = $env:LocalOctopusClientSecret # You need to set $env:LocalOctopusClientSecret locally
+        $IdentityServerClientSecret = $env:LocalOctopusClientSecret # You need to set $env:LocalOctopusClientSecret locally - use '' string if secret contains $
         $IdentityServerUrl = "https://si-agroid-identityserver.segestest.dk"
         $ResourceEnvironment = $environment
         $ClientId = "$environment-$projectName-$projectRole"
